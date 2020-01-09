@@ -12,17 +12,20 @@
 SoftwareSerial swSer(D5, D6);  // RX,TX
 #include <Adafruit_Sensor.h> // Library Adafruit Unified Sensor
 #include <DHT.h> // Library Adafruit DHT
+#include <TimeLib.h> // https://github.com/PaulStoffregen/Time
+#include <WidgetRTC.h>
+BlynkTimer timer;
+WidgetRTC rtc;
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
+char auth[] = "f2b32463578a4a95811cda91c6487038";
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
-char ssid[] = "YourNetworkName";
-char pass[] = "YourPassword";
+char ssid[] = "phloenlom_2.4GHz";
+char pass[] = "248248248";
 
-BlynkTimer timer;
 int count = 0;
 bool Connected2Blynk = false;
 
@@ -33,6 +36,93 @@ bool Connected2Blynk = false;
 //#define DHTTYPE    DHT21     // DHT 21 (AM2301)
 DHT dht(DHTPIN, DHTTYPE);
 
+String D3_Start,D3_Stop,D3_Day,D4_Start,D4_Stop,D4_Day;
+String D5_Start,D5_Stop,D5_Day,D6_Start,D6_Stop,D6_Day;
+int ledState = LOW;
+
+
+// Digital clock display of the time
+void clockDisplay()
+{
+  // You can call hour(), minute(), ... at any time
+  // Please see Time library examples for details
+  char hh[4],mm[4],ss[4],mm_plus[4];
+  sprintf(hh, "%02d", hour());
+  sprintf(mm, "%02d", minute());
+  sprintf(mm_plus, "%02d", int(minute())-1);
+  sprintf(ss, "%02d", second());   
+  char dd[4],mo[4],yy[8];
+  sprintf(dd, "%02d", day());
+  sprintf(mo, "%02d", month());
+  sprintf(yy, "%04d", year());   
+
+  String currentTime = String(hh) + ":" + String(mm) + ":" + String(ss);
+  String currentTime_plus = String(hh) + ":" + String(mm_plus) + ":" + String(ss);
+  String currentDate = String(dd) + "-" + String(mo) + "-" + String(yy);
+  Serial.print("Current time: ");
+  Serial.print(currentTime);
+  Serial.print(" ");
+  Serial.print(currentDate);
+  Serial.println();
+  Serial.print("Current time plus: ");
+  Serial.println(currentTime_plus);
+  if(D3_Day.substring(weekday()-1,weekday())=="1") {
+    if(currentTime>D3_Start && currentTime<D3_Stop) {
+      Blynk.virtualWrite(V13, 1);
+      Serial.println("Run D3");
+    } else {
+      if(currentTime>D3_Start && currentTime_plus<D3_Stop) {
+        Blynk.virtualWrite(V13, 0);      
+      }
+      pinMode(D3,LOW);
+    }
+  } else {
+    pinMode(D3,LOW);
+  }
+  if(D4_Day.substring(weekday()-1,weekday())=="1") {
+    if(currentTime>D4_Start && currentTime<D4_Stop) {
+      Blynk.virtualWrite(V14, 1);
+      Serial.println("Run D4");
+    } else {
+      if(currentTime>D4_Start && currentTime_plus<D4_Stop) {
+        Blynk.virtualWrite(V14, 0);      
+      }
+      pinMode(D4,LOW);
+    }
+  } else {
+    pinMode(D4,LOW);
+  }
+  if(D5_Day.substring(weekday()-1,weekday())=="1") {
+    if(currentTime>D5_Start && currentTime<D5_Stop) {
+      Blynk.virtualWrite(V15, 1);
+      Serial.println("Run D5");
+    } else {
+      if(currentTime>D5_Start && currentTime_plus<D5_Stop) {
+        Blynk.virtualWrite(V15, 0);      
+      }
+      pinMode(D5,LOW);
+    }
+  } else {
+    pinMode(D5,LOW);
+  }
+  if(D6_Day.substring(weekday()-1,weekday())=="1") {
+    if(currentTime>D6_Start && currentTime<D6_Stop) {
+      Blynk.virtualWrite(V16, 1);
+      Serial.println("Run D6");
+    } else {
+      if(currentTime>D6_Start && currentTime_plus<D6_Stop) {
+        Blynk.virtualWrite(V16, 0);      
+      }
+      pinMode(D6,LOW);
+    }
+  } else {
+    pinMode(D6,LOW);
+  }
+  // Send time to the App
+  Blynk.virtualWrite(V1, currentTime);
+  // Send date to the App
+  Blynk.virtualWrite(V2, currentDate);
+}
 // This function sends Arduino's up time every second to Virtual Pin (0).
 // In the app, Widget's reading frequency should be set to PUSH. This means
 // that you define how often to send data to Blynk App.
@@ -71,51 +161,162 @@ void myTimerEvent()
 
 BLYNK_WRITE(V3)
 {
-  // You'll get HIGH/1 at startTime and LOW/0 at stopTime.
-  // this method will be triggered every day
-  // until you remove widget or stop project or
-  // clean stop/start fields of widget
-  if(param.asInt()==1) {
-    digitalWrite(D3,HIGH);
-  } else {
-    digitalWrite(D3,LOW);
+  TimeInputParam t(param);
+  // Process start time
+  if (t.hasStartTime())
+  {
+    char hh[4],mm[4],ss[4];
+    sprintf(hh, "%02d", t.getStartHour());
+    sprintf(mm, "%02d", t.getStartMinute());
+    sprintf(ss, "%02d", t.getStartSecond());   
+    D3_Start = String(hh)+":"+String(mm)+":"+String(ss);
+    Serial.println(String("D3 Start: ") + D3_Start);
   }
-  Serial.print("Got a value: ");
-  Serial.println(param.asStr());
+  if (t.hasStopTime())
+  {
+    char hh[4],mm[4],ss[4];
+    sprintf(hh, "%02d", t.getStopHour());
+    sprintf(mm, "%02d", t.getStopMinute());
+    sprintf(ss, "%02d", t.getStopSecond());   
+    D3_Stop = String(hh)+":"+String(mm)+":"+String(ss);
+    Serial.println(String("D3 Stop : ") + D3_Stop);
+  }
+  // Process weekdays (1. Mon, 2. Tue, 3. Wed, ...)
+  D3_Day="";
+  for (int i = 1; i <= 7; i++) {
+    if (t.isWeekdaySelected(i)) {
+      D3_Day+="1";
+    } else {
+      D3_Day+="0";
+    }
+  }  
+  Serial.println(String("D3 Day ") + D3_Day);
 }
 
 BLYNK_WRITE(V4)
 {
-  if(param.asInt()==1) {
-    digitalWrite(D4,HIGH);
-  } else {
-    digitalWrite(D4,LOW);
+  TimeInputParam t(param);
+  // Process start time
+  if (t.hasStartTime())
+  {
+    char hh[4],mm[4],ss[4];
+    sprintf(hh, "%02d", t.getStartHour());
+    sprintf(mm, "%02d", t.getStartMinute());
+    sprintf(ss, "%02d", t.getStartSecond());   
+    D4_Start = String(hh)+":"+String(mm)+":"+String(ss);
+    Serial.println(String("D4 Start: ") + D4_Start);
   }
-  Serial.print("Got a value: ");
-  Serial.println(param.asStr());
+  if (t.hasStopTime())
+  {
+    char hh[4],mm[4],ss[4];
+    sprintf(hh, "%02d", t.getStopHour());
+    sprintf(mm, "%02d", t.getStopMinute());
+    sprintf(ss, "%02d", t.getStopSecond());   
+    D4_Stop = String(hh)+":"+String(mm)+":"+String(ss);
+    Serial.println(String("D4 Stop : ") + D4_Stop);
+  }
+  // Process weekdays (1. Mon, 2. Tue, 3. Wed, ...)
+  D4_Day="";
+  for (int i = 1; i <= 7; i++) {
+    if (t.isWeekdaySelected(i)) {
+      D4_Day+="1";
+    } else {
+      D4_Day+="0";
+    }
+  }  
+  Serial.println(String("D4 Day ") + D4_Day);
 }
 
 BLYNK_WRITE(V5)
 {
-  if(param.asInt()==1) {
-    digitalWrite(D5,HIGH);
-  } else {
-    digitalWrite(D5,LOW);
+  TimeInputParam t(param);
+  // Process start time
+  if (t.hasStartTime())
+  {
+    char hh[4],mm[4],ss[4];
+    sprintf(hh, "%02d", t.getStartHour());
+    sprintf(mm, "%02d", t.getStartMinute());
+    sprintf(ss, "%02d", t.getStartSecond());   
+    D5_Start = String(hh)+":"+String(mm)+":"+String(ss);
+    Serial.println(String("D5 Start: ") + D5_Start);
   }
-  Serial.print("Got a value: ");
-  Serial.println(param.asStr());
+  if (t.hasStopTime())
+  {
+    char hh[4],mm[4],ss[4];
+    sprintf(hh, "%02d", t.getStopHour());
+    sprintf(mm, "%02d", t.getStopMinute());
+    sprintf(ss, "%02d", t.getStopSecond());   
+    D5_Stop = String(hh)+":"+String(mm)+":"+String(ss);
+    Serial.println(String("D5 Stop : ") + D5_Stop);
+  }
+  // Process weekdays (1. Mon, 2. Tue, 3. Wed, ...)
+  D5_Day="";
+  for (int i = 1; i <= 7; i++) {
+    if (t.isWeekdaySelected(i)) {
+      D5_Day+="1";
+    } else {
+      D5_Day+="0";
+    }
+  }  
+  Serial.println(String("D5 Day ") + D5_Day);
 }
 
 BLYNK_WRITE(V6)
 {
-  if(param.asInt()==1) {
-    digitalWrite(D6,HIGH);
-  } else {
-    digitalWrite(D6,LOW);
+  TimeInputParam t(param);
+  // Process start time
+  if (t.hasStartTime())
+  {
+    char hh[4],mm[4],ss[4];
+    sprintf(hh, "%02d", t.getStartHour());
+    sprintf(mm, "%02d", t.getStartMinute());
+    sprintf(ss, "%02d", t.getStartSecond());   
+    D6_Start = String(hh)+":"+String(mm)+":"+String(ss);
+    Serial.println(String("D6 Start: ") + D6_Start);
   }
-  Serial.print("Got a value: ");
-  Serial.println(param.asStr());
+  if (t.hasStopTime())
+  {
+    char hh[4],mm[4],ss[4];
+    sprintf(hh, "%02d", t.getStopHour());
+    sprintf(mm, "%02d", t.getStopMinute());
+    sprintf(ss, "%02d", t.getStopSecond());   
+    D6_Stop = String(hh)+":"+String(mm)+":"+String(ss);
+    Serial.println(String("D6 Stop : ") + D6_Stop);
+  }
+  // Process weekdays (1. Mon, 2. Tue, 3. Wed, ...)
+  D6_Day="";
+  for (int i = 1; i <= 7; i++) {
+    if (t.isWeekdaySelected(i)) {
+      D6_Day+="1";
+    } else {
+      D6_Day+="0";
+    }
+  }  
+  Serial.println(String("D6 Day ") + D6_Day);
 }
+
+// When App button is pushed - switch the state
+BLYNK_WRITE(V13) {
+  ledState = param.asInt();
+  digitalWrite(D3, ledState);
+  Serial.println("D3 "+String(ledState));
+}
+BLYNK_WRITE(V14) {
+  ledState = param.asInt();
+  digitalWrite(D4, ledState);
+  Serial.println("D4 "+String(ledState));
+}
+BLYNK_WRITE(V15) {
+  ledState = param.asInt();
+  digitalWrite(D5, ledState);
+  Serial.println("D5 "+String(ledState));
+}
+BLYNK_WRITE(V16) {
+  ledState = param.asInt();
+  digitalWrite(D6, ledState);
+  Serial.println("D6 "+String(ledState));
+}
+
 
 void WiFiConnect()
 {
@@ -171,6 +372,10 @@ void setup()
     // Wait until connected
   }
   Serial.println("Connected to Blynk server");
+  // Begin synchronizing time
+  rtc.begin();
+  // Display digital clock every 10 seconds
+  timer.setInterval(10000L, clockDisplay);  
   timer.setInterval(4000L, CheckConnection); // check if still connected every 11 seconds 
 }
 
@@ -181,3 +386,4 @@ void loop()
   }
   timer.run();
 }
+  
