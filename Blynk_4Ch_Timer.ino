@@ -52,9 +52,8 @@ void myTimerEvent()
   }  
   // You can send any value at any time.
   // Please don't send more that 10 values per second.
-  int r = random(100);
-  Blynk.virtualWrite(V0, r);
-  Serial.println(r);
+  Blynk.virtualWrite(V0, newT);
+  Serial.println(newT);
 
   // Read Humidity
   float newH = dht.readHumidity();
@@ -79,7 +78,7 @@ BLYNK_WRITE(V3)
   if(param.asInt()==1) {
     digitalWrite(D3,HIGH);
   } else {
-    digitalWrite(D3,HIGH);
+    digitalWrite(D3,LOW);
   }
   Serial.print("Got a value: ");
   Serial.println(param.asStr());
@@ -90,7 +89,7 @@ BLYNK_WRITE(V4)
   if(param.asInt()==1) {
     digitalWrite(D4,HIGH);
   } else {
-    digitalWrite(D4,HIGH);
+    digitalWrite(D4,LOW);
   }
   Serial.print("Got a value: ");
   Serial.println(param.asStr());
@@ -101,7 +100,7 @@ BLYNK_WRITE(V5)
   if(param.asInt()==1) {
     digitalWrite(D5,HIGH);
   } else {
-    digitalWrite(D5,HIGH);
+    digitalWrite(D5,LOW);
   }
   Serial.print("Got a value: ");
   Serial.println(param.asStr());
@@ -112,7 +111,7 @@ BLYNK_WRITE(V6)
   if(param.asInt()==1) {
     digitalWrite(D6,HIGH);
   } else {
-    digitalWrite(D6,HIGH);
+    digitalWrite(D6,LOW);
   }
   Serial.print("Got a value: ");
   Serial.println(param.asStr());
