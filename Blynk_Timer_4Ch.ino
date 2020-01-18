@@ -9,7 +9,7 @@
  *  =============
  *  D3 will small spark but not effect to Trick relay
  *  D4 will Spark when Upload code
- *  then unplug Vcc form your relay board unitl upload 
+ *  then unplug Vcc form your relay board until upload 
  * 
  */
 #define BLYNK_PRINT Serial
