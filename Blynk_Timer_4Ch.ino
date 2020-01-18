@@ -11,12 +11,20 @@
  *  D4 will Spark when Upload code
  *  then unplug Vcc form your relay board until upload 
  * 
+ *  D1 RX --- TX
+ *  D2 TX --- RX
+ *  D3 Relay IN1
+ *  D4 Relay IN2
+ *  D5 Relay IN3
+ *  D6 Relay IN4
+ *  D7 DHT11
+ *  
  */
 #define BLYNK_PRINT Serial
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
 #include <SoftwareSerial.h>
-SoftwareSerial swSer(D5, D6);  // RX,TX
+SoftwareSerial swSer(D1, D2);  // RX,TX
 #include <Adafruit_Sensor.h> // Library Adafruit Unified Sensor
 #include <DHT.h> // Library Adafruit DHT
 #include <TimeLib.h> // https://github.com/PaulStoffregen/Time
@@ -36,7 +44,7 @@ char pass[] = "248248248";
 int count = 0;
 bool Connected2Blynk = false;
 
-#define DHTPIN D1     // Digital pin connected to the DHT sensor
+#define DHTPIN D7     // Digital pin connected to the DHT sensor
 // Uncomment the type of sensor in use:
 #define DHTTYPE    DHT11     // DHT 11
 //#define DHTTYPE    DHT22     // DHT 22 (AM2302)
