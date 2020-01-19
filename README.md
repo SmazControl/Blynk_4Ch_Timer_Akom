@@ -1,4 +1,4 @@
-# Blynk_4Ch_Timer_Akom
+# esp8266 Blynk_4Ch_Timer_Akom
 Blynk 4 Ch Timer esp8266 Arkom Thai Baan Soft
 
 <img src="https://github.com/SmazControl/Blynk_4Ch_Timer_Akom/blob/master/Screen_V.jpg?raw=true"><img src="https://github.com/SmazControl/Blynk_4Ch_Timer_Akom/blob/master/Screen_V1.jpg?raw=true">
