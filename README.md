@@ -21,4 +21,6 @@ https://github.com/SmazControl/Blynk_ARKOM_thaibaanSoft
 * Need 
 https://github.com/PaulStoffregen/Time
 
-
+ใน Time Input ให้
+* Allow START/STOP INPUT
+* Allow DAY of WEEK SELECTION
