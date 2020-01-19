@@ -14,5 +14,7 @@ Blynk 4 Ch Timer esp8266 Arkom Thai Baan Soft
 * SuperChart V90 for Temp V91 for Humid 
 * Akom Serial Auto Reset WiFi Mesh ready
 
+https://github.com/SmazControl/Blynk_ARKOM_thaibaanSoft
+
 
 <img src="https://github.com/SmazControl/Blynk_4Ch_Timer_Akom/blob/master/Screen_V.jpg?raw=true"><img src="https://github.com/SmazControl/Blynk_4Ch_Timer_Akom/blob/master/Screen_V1.jpg?raw=true">
