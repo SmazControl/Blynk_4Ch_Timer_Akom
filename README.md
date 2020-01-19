@@ -1,6 +1,8 @@
 # Blynk_4Ch_Timer_Akom
 Blynk 4 Ch Timer esp8266 Arkom Thai Baan Soft
 
+<img src="https://github.com/SmazControl/Blynk_4Ch_Timer_Akom/blob/master/Screen_V.jpg?raw=true"><img src="https://github.com/SmazControl/Blynk_4Ch_Timer_Akom/blob/master/Screen_V1.jpg?raw=true">
+
 ใช้ตั้งเวลารดน้ำต้นไม้ 4 วาล์วไฟฟ้า ตั้งเวลาได้ 2 รอบต่อวัน
 
 ถ้าวาล์วใดวาล์วหนึ่งเปิด ปั้ม ก็จะเปิดตาม D7
@@ -20,4 +22,3 @@ https://github.com/SmazControl/Blynk_ARKOM_thaibaanSoft
 https://github.com/PaulStoffregen/Time
 
 
-<img src="https://github.com/SmazControl/Blynk_4Ch_Timer_Akom/blob/master/Screen_V.jpg?raw=true"><img src="https://github.com/SmazControl/Blynk_4Ch_Timer_Akom/blob/master/Screen_V1.jpg?raw=true">
