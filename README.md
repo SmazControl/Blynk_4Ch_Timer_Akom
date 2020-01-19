@@ -24,3 +24,7 @@ https://github.com/PaulStoffregen/Time
 ใน Time Input ให้
 * Allow START/STOP INPUT
 * Allow DAY of WEEK SELECTION
+
+ใช้กับ HIGH Trick Relay การใช้งาน
+
+<img src="https://github.com/SmazControl/Blynk_4Ch_Timer_Akom/blob/master/HIGH.jpg?raw=true">
