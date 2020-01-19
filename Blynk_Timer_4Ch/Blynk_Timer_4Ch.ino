@@ -36,12 +36,12 @@ WidgetRTC rtc;
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
-char auth[] = "f2b32463578a4a95811cda91c6487038";
+char auth[] = ".......Your.Blynk.Token.........";
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
-char ssid[] = "Supod";
-char pass[] = "palace66";
+char ssid[] = "YourWiFiSSID";
+char pass[] = "YourPassword";
 
 int count = 0;
 bool Connected2Blynk = false;
