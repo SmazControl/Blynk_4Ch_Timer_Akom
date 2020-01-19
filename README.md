@@ -1,11 +1,17 @@
 # Blynk_4Ch_Timer_Akom
 Blynk 4 Ch Timer esp8266 Arkom Thai Baan Soft
 
-* set Button V13,V14,V15,V16
-* set Time Input V3,V4,V5,V6
+ใช้ตั้งเวลารดน้ำต้นไม้ 4 วาล์วไฟฟ้า ตั้งเวลาได้ 2 รอบต่อวัน
+
+ถ้าวาล์วใดวาล์วหนึ่งเปิด ปั้ม ก็จะเปิดตาม D7
+
+* add Button V81,V82,V85,V86
+* add Time Input รอบที่ (1) = V11,V12,V15,V16
+* add Time Input รอบที่ (2) = V21,V22,V25,V26
+* add Led V99 for Pump
 * Real Time Clock Widget
-* GPIO in this code D3,D4,D5,D6 esp8266
-* SuperChart V0 for Temp V1 for Humid 
+* GPIO in this code วาล์วไฟฟ้า D1,D2,D5,D6,D7=Pump esp8266
+* SuperChart V90 for Temp V91 for Humid 
 * Akom Serial Auto Reset WiFi Mesh ready
 
 
