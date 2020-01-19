@@ -9,4 +9,5 @@ Blynk 4 Ch Timer esp8266 Arkom Thai Baan Soft
 * Akom Serial Auto Reset WiFi Mesh ready
 
 
-<img src="https://github.com/SmazControl/Blynk_4Ch_Timer_Akom/blob/master/4Ch%20Blynk.jpg?raw=true" width="300px">
+<img src="https://github.com/SmazControl/Blynk_4Ch_Timer_Akom/blob/master/Screen_V.jpg?raw=true">
+<img src="https://github.com/SmazControl/Blynk_4Ch_Timer_Akom/blob/master/Screen_V1.jpg?raw=true">
