@@ -90,14 +90,14 @@ void clockDisplay()
     if(currentTime>D1_Start1 && currentTime_minus<D1_Start1 && currentTime<D1_Stop1) {
       Blynk.virtualWrite(V81, 1);
       Serial.println("Run D1");
-      digitalWrite(D1,HIGH);
-      digitalWrite(D7,HIGH); 
+      digitalWrite(D1,LOW);
+      digitalWrite(D7,LOW); 
       led99.on();    
     } else {
       if(currentTime>D1_Stop1 && currentTime_minus<D1_Stop1) {
         Blynk.virtualWrite(V81, 0);      
-        digitalWrite(D1,LOW);
-        digitalWrite(D7,LOW);      
+        digitalWrite(D1,HIGH);
+        digitalWrite(D7,HIGH);      
         led99.off();    
       }
     }
@@ -106,14 +106,14 @@ void clockDisplay()
     if(currentTime>D1_Start1 && currentTime_minus<D2_Start1 && currentTime<D2_Stop1) {
       Blynk.virtualWrite(V82, 1);
       Serial.println("Run D2");
-      digitalWrite(D2,HIGH);
-      digitalWrite(D7,HIGH);
+      digitalWrite(D2,LOW);
+      digitalWrite(D7,LOW);
       led99.on();          
     } else {
       if(currentTime>D2_Stop1 && currentTime_minus<D2_Stop1) {
         Blynk.virtualWrite(V82, 0);      
-        digitalWrite(D2,LOW);
-        digitalWrite(D7,LOW);
+        digitalWrite(D2,HIGH);
+        digitalWrite(D7,HIGH);
         led99.off();    
       }
     }
@@ -122,14 +122,14 @@ void clockDisplay()
     if(currentTime>D5_Start1 && currentTime_minus<D5_Start1 && currentTime<D5_Stop1) {
       Blynk.virtualWrite(V85, 1);
       Serial.println("Run D5");
-      digitalWrite(D5,HIGH);
-      digitalWrite(D7,HIGH);
+      digitalWrite(D5,LOW);
+      digitalWrite(D7,LOW);
       led99.on();    
     } else {
       if(currentTime>D5_Stop1 && currentTime_minus<D5_Stop1) {
         Blynk.virtualWrite(V85, 0);      
-        digitalWrite(D5,LOW);
-        digitalWrite(D7,LOW);
+        digitalWrite(D5,HIGH);
+        digitalWrite(D7,HIGH);
         led99.off();    
       }
     }
@@ -138,14 +138,14 @@ void clockDisplay()
     if(currentTime>D6_Start1 && currentTime_minus<D6_Start1 && currentTime<D6_Stop1) {
       Blynk.virtualWrite(V86, 1);
       Serial.println("Run D6");
-      digitalWrite(D6,HIGH);
-      digitalWrite(D7,HIGH);
+      digitalWrite(D6,LOW);
+      digitalWrite(D7,LOW);
       led99.on();    
     } else {
       if(currentTime>D6_Stop1 && currentTime_minus<D6_Stop1) {
         Blynk.virtualWrite(V86, 0);      
-        digitalWrite(D6,LOW);
-        digitalWrite(D7,LOW);
+        digitalWrite(D6,HIGH);
+        digitalWrite(D7,HIGH);
         led99.off();    
       }
     }
@@ -154,14 +154,14 @@ void clockDisplay()
     if(currentTime>D1_Start2 && currentTime_minus<D1_Start2 && currentTime<D1_Stop2) {
       Blynk.virtualWrite(V81, 1);
       Serial.println("Run D1");
-      digitalWrite(D1,HIGH);
-      digitalWrite(D7,HIGH);
+      digitalWrite(D1,LOW);
+      digitalWrite(D7,LOW);
       led99.on();    
     } else {
       if(currentTime>D1_Stop2 && currentTime_minus<D1_Stop2) {
         Blynk.virtualWrite(V81, 0);      
-        digitalWrite(D1,LOW);
-        digitalWrite(D7,LOW);
+        digitalWrite(D1,HIGH);
+        digitalWrite(D7,HIGH);
         led99.off();    
       }
     }
@@ -170,14 +170,14 @@ void clockDisplay()
     if(currentTime>D2_Start2 && currentTime_minus<D2_Start2 && currentTime<D2_Stop2) {
       Blynk.virtualWrite(V82, 1);
       Serial.println("Run D2");
-      digitalWrite(D2,HIGH);
-      digitalWrite(D7,HIGH);
+      digitalWrite(D2,LOW);
+      digitalWrite(D7,LOW);
       led99.on();    
     } else {
       if(currentTime>D2_Stop2 && currentTime_minus<D2_Stop2) {
         Blynk.virtualWrite(V82, 0);      
-        digitalWrite(D2,LOW);
-        digitalWrite(D7,LOW);
+        digitalWrite(D2,HIGH);
+        digitalWrite(D7,HIGH);
         led99.off();    
       }
     }
@@ -186,14 +186,14 @@ void clockDisplay()
     if(currentTime>D5_Start2 && currentTime_minus<D5_Start2 && currentTime<D5_Stop2) {
       Blynk.virtualWrite(V85, 1);
       Serial.println("Run D5");
-      digitalWrite(D5,HIGH);
-      digitalWrite(D7,HIGH);
+      digitalWrite(D5,LOW);
+      digitalWrite(D7,LOW);
       led99.on();    
     } else {
       if(currentTime>D5_Stop2 && currentTime_minus<D5_Stop2) {
         Blynk.virtualWrite(V85, 0);      
-        digitalWrite(D5,LOW);
-        digitalWrite(D7,LOW);
+        digitalWrite(D5,HIGH);
+        digitalWrite(D7,HIGH);
         led99.off();    
       }
     }
@@ -202,14 +202,14 @@ void clockDisplay()
     if(currentTime>D6_Start2 && currentTime_minus<D6_Start2 && currentTime<D6_Stop2) {
       Blynk.virtualWrite(V86, 1);
       Serial.println("Run D6");
-      digitalWrite(D6,HIGH);
-      digitalWrite(D7,HIGH);
+      digitalWrite(D6,LOW);
+      digitalWrite(D7,LOW);
       led99.on();    
     } else {
       if(currentTime>D6_Stop2 && currentTime_minus<D6_Stop2) {
         Blynk.virtualWrite(V86, 0);      
-        digitalWrite(D6,LOW);
-        digitalWrite(D7,LOW);
+        digitalWrite(D6,HIGH);
+        digitalWrite(D7,HIGH);
         led99.off();    
       }
     }
@@ -576,10 +576,10 @@ BLYNK_WRITE(V81) {
   ledState = param.asInt();
   digitalWrite(D1, ledState);
   if(ledState==0) {
-    digitalWrite(D7, LOW);
+    digitalWrite(D7, HIGH);
     led99.off();    
   } else {
-    digitalWrite(D7, HIGH);
+    digitalWrite(D7, LOW);
     led99.on();    
   }
   Serial.println("D1 "+String(ledState));
@@ -588,10 +588,10 @@ BLYNK_WRITE(V82) {
   ledState = param.asInt();
   digitalWrite(D2, ledState);
   if(ledState==0) {
-    digitalWrite(D7, LOW);
+    digitalWrite(D7, HIGH);
     led99.off();    
   } else {
-    digitalWrite(D7, HIGH);
+    digitalWrite(D7, LOW);
     led99.on();    
   }
   Serial.println("D2 "+String(ledState));
@@ -600,10 +600,10 @@ BLYNK_WRITE(V85) {
   ledState = param.asInt();
   digitalWrite(D5, ledState);
   if(ledState==0) {
-    digitalWrite(D7, LOW);
+    digitalWrite(D7, HIGH);
     led99.off();    
   } else {
-    digitalWrite(D7, HIGH);
+    digitalWrite(D7, LOW);
     led99.on();    
   }
   Serial.println("D5 "+String(ledState));
@@ -612,10 +612,10 @@ BLYNK_WRITE(V86) {
   ledState = param.asInt();
   digitalWrite(D6, ledState);
   if(ledState==0) {
-    digitalWrite(D7, LOW);
+    digitalWrite(D7, HIGH);
     led99.off();    
   } else {
-    digitalWrite(D7, HIGH);
+    digitalWrite(D7, LOW);
     led99.on();    
   }
   Serial.println("D6 "+String(ledState));
@@ -749,11 +749,11 @@ void setup()
   pinMode(D5,OUTPUT);
   pinMode(D6,OUTPUT);
   pinMode(D7,OUTPUT);
-  digitalWrite(D1,LOW);
-  digitalWrite(D2,LOW);
-  digitalWrite(D5,LOW);
-  digitalWrite(D6,LOW);
-  digitalWrite(D7,LOW);
+  digitalWrite(D1,HIGH);
+  digitalWrite(D2,HIGH);
+  digitalWrite(D5,HIGH);
+  digitalWrite(D6,HIGH);
+  digitalWrite(D7,HIGH);
   WiFiConnect();
   Blynk.config(auth);  // in place of Blynk.begin(auth, ssid, pass);
   Blynk.connect(3333);  // timeout set to 10 seconds and then continue without Blynk
