@@ -25,6 +25,6 @@ https://github.com/PaulStoffregen/Time
 * Allow START/STOP INPUT
 * Allow DAY of WEEK SELECTION
 
-ใช้กับ HIGH Trick Relay การใช้งาน
+27/1/63 ปรับโปรแกรมให้ใช้กับ LOW Trick Relay ทั่วไปในท้องตลาด
 
-<img src="https://github.com/SmazControl/Blynk_4Ch_Timer_Akom/blob/master/HIGH.jpg?raw=true">
+
