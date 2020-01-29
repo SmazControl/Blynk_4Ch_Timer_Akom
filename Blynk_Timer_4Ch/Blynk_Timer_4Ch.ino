@@ -656,6 +656,7 @@ void CheckConnection(){
       Blynk.connect(3333);  // timeout set to 10 seconds and then continue without Blynk  
     }
     else{
+      count = 0;
       myTimerEvent();     
     }  
   }
