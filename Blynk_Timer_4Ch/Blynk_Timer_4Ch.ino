@@ -455,7 +455,7 @@ BLYNK_WRITE(V21)
       D1_Day2+="0";
     }
   }  
-  Serial.println(String("D3 Day2 ") + D1_Day2);
+  Serial.println(String("D1 Day2 ") + D1_Day2);
   write_String(800,D1_Day2);
 }
 
