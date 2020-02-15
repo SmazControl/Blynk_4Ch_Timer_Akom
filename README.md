@@ -25,6 +25,6 @@ https://github.com/PaulStoffregen/Time
 * Allow START/STOP INPUT
 * Allow DAY of WEEK SELECTION
 
-27/1/63 ปรับโปรแกรมให้ใช้กับ LOW Trick Relay ทั่วไปในท้องตลาด
-15/2/63 แก้ไขให้สามารถกดหยุดสวนได้ ในระดับวินาที
+- 27/1/63 ปรับโปรแกรมให้ใช้กับ LOW Trick Relay ทั่วไปในท้องตลาด
+- 15/2/63 แก้ไขให้สามารถกดหยุดสวนได้ ในระดับวินาที
 
