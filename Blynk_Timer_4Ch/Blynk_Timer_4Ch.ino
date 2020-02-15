@@ -36,12 +36,12 @@ WidgetRTC rtc;
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
-char auth[] = ".......Your.Blynk.Token.........";
+char auth[] = "........Your.Blynk.Token.........";
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
 char ssid[] = "YourWiFiSSID";
-char pass[] = "YourPassword";
+char pass[] = "YourWiFiPassword";
 
 int count = 0;
 bool Connected2Blynk = false;
@@ -59,7 +59,8 @@ String D5_Start1,D5_Stop1,D5_Day1,D6_Start1,D6_Stop1,D6_Day1;
 String D1_Start2,D1_Stop2,D1_Day2,D2_Start2,D2_Stop2,D2_Day2;
 String D5_Start2,D5_Stop2,D5_Day2,D6_Start2,D6_Stop2,D6_Day2;
 int ledState = LOW;
-
+String LastTime = "";
+String LastDate = "";
 
 // Digital clock display of the time
 void clockDisplay()
@@ -86,131 +87,178 @@ void clockDisplay()
   Serial.println();
   Serial.print("Current time minus: ");
   Serial.println(currentTime_minus);
-  if(D1_Day1.substring(weekday()-1,weekday())=="1") {
-    if(currentTime>D1_Start1 && currentTime_minus<D1_Start1 && currentTime<D1_Stop1) {
-      Blynk.virtualWrite(V81, 1);
-      Serial.println("Run D1");
-      digitalWrite(D1,LOW);
-      digitalWrite(D7,LOW); 
-      led99.on();    
-    } else {
-      if(currentTime>D1_Stop1 && currentTime_minus<D1_Stop1) {
-        Blynk.virtualWrite(V81, 0);      
-        digitalWrite(D1,HIGH);
-        digitalWrite(D7,HIGH);      
-        led99.off();    
+  if (LastTime == "") {
+    LastTime = currentTime.substring(0,5);
+    LastDate = currentDate;
+  } else {
+    if (LastTime != currentTime.substring(0,5) || LastDate != currentDate) {  
+      if(D1_Day1.substring(weekday()-1,weekday())=="1") {
+        if(currentTime>D1_Start1 && currentTime_minus<D1_Start1 && currentTime<D1_Stop1) {
+          Blynk.virtualWrite(V81, 1);
+          Serial.println("Run D1");
+          digitalWrite(D1,LOW);
+          digitalWrite(D7,LOW); 
+          led99.on();    
+          LastTime = currentTime.substring(0,5);
+          LastDate = currentDate;
+        } else {
+          if(currentTime>D1_Stop1 && currentTime_minus<D1_Stop1) {
+            Blynk.virtualWrite(V81, 0);      
+            Serial.println("Stop D1");
+            digitalWrite(D1,HIGH);
+            digitalWrite(D7,HIGH);      
+            led99.off();    
+            LastTime = currentTime.substring(0,5);
+            LastDate = currentDate;
+          }
+        }
       }
-    }
-  }
-  if(D2_Day1.substring(weekday()-1,weekday())=="1") {
-    if(currentTime>D1_Start1 && currentTime_minus<D2_Start1 && currentTime<D2_Stop1) {
-      Blynk.virtualWrite(V82, 1);
-      Serial.println("Run D2");
-      digitalWrite(D2,LOW);
-      digitalWrite(D7,LOW);
-      led99.on();          
-    } else {
-      if(currentTime>D2_Stop1 && currentTime_minus<D2_Stop1) {
-        Blynk.virtualWrite(V82, 0);      
-        digitalWrite(D2,HIGH);
-        digitalWrite(D7,HIGH);
-        led99.off();    
+      if(D2_Day1.substring(weekday()-1,weekday())=="1") {
+        if(currentTime>D1_Start1 && currentTime_minus<D2_Start1 && currentTime<D2_Stop1) {
+          Blynk.virtualWrite(V82, 1);
+          Serial.println("Run D2");
+          digitalWrite(D2,LOW);
+          digitalWrite(D7,LOW);
+          led99.on();          
+          LastTime = currentTime.substring(0,5);
+          LastDate = currentDate;
+        } else {
+          if(currentTime>D2_Stop1 && currentTime_minus<D2_Stop1) {
+            Blynk.virtualWrite(V82, 0);      
+            Serial.println("Stop D2");
+            digitalWrite(D2,HIGH);
+            digitalWrite(D7,HIGH);
+            led99.off();    
+            LastTime = currentTime.substring(0,5);
+            LastDate = currentDate;
+          }
+        }
       }
-    }
-  }
-  if(D5_Day1.substring(weekday()-1,weekday())=="1") {
-    if(currentTime>D5_Start1 && currentTime_minus<D5_Start1 && currentTime<D5_Stop1) {
-      Blynk.virtualWrite(V85, 1);
-      Serial.println("Run D5");
-      digitalWrite(D5,LOW);
-      digitalWrite(D7,LOW);
-      led99.on();    
-    } else {
-      if(currentTime>D5_Stop1 && currentTime_minus<D5_Stop1) {
-        Blynk.virtualWrite(V85, 0);      
-        digitalWrite(D5,HIGH);
-        digitalWrite(D7,HIGH);
-        led99.off();    
+      if(D5_Day1.substring(weekday()-1,weekday())=="1") {
+        if(currentTime>D5_Start1 && currentTime_minus<D5_Start1 && currentTime<D5_Stop1) {
+          Blynk.virtualWrite(V85, 1);
+          Serial.println("Run D5");
+          digitalWrite(D5,LOW);
+          digitalWrite(D7,LOW);
+          led99.on();    
+          LastTime = currentTime.substring(0,5);
+          LastDate = currentDate;
+        } else {
+          if(currentTime>D5_Stop1 && currentTime_minus<D5_Stop1) {
+            Blynk.virtualWrite(V85, 0);      
+            Serial.println("Stop D5");
+            digitalWrite(D5,HIGH);
+            digitalWrite(D7,HIGH);
+            led99.off();    
+            LastTime = currentTime.substring(0,5);
+            LastDate = currentDate;
+          }
+        }
       }
-    }
-  }
-  if(D6_Day1.substring(weekday()-1,weekday())=="1") {
-    if(currentTime>D6_Start1 && currentTime_minus<D6_Start1 && currentTime<D6_Stop1) {
-      Blynk.virtualWrite(V86, 1);
-      Serial.println("Run D6");
-      digitalWrite(D6,LOW);
-      digitalWrite(D7,LOW);
-      led99.on();    
-    } else {
-      if(currentTime>D6_Stop1 && currentTime_minus<D6_Stop1) {
-        Blynk.virtualWrite(V86, 0);      
-        digitalWrite(D6,HIGH);
-        digitalWrite(D7,HIGH);
-        led99.off();    
+      if(D6_Day1.substring(weekday()-1,weekday())=="1") {
+        if(currentTime>D6_Start1 && currentTime_minus<D6_Start1 && currentTime<D6_Stop1) {
+          Blynk.virtualWrite(V86, 1);
+          Serial.println("Run D6");
+          digitalWrite(D6,LOW);
+          digitalWrite(D7,LOW);
+          led99.on();    
+          LastTime = currentTime.substring(0,5);
+          LastDate = currentDate;
+        } else {
+          if(currentTime>D6_Stop1 && currentTime_minus<D6_Stop1) {
+            Blynk.virtualWrite(V86, 0);      
+            Serial.println("Stop D6");
+            digitalWrite(D6,HIGH);
+            digitalWrite(D7,HIGH);
+            led99.off();    
+            LastTime = currentTime.substring(0,5);
+            LastDate = currentDate;
+          }
+        }
       }
-    }
-  }
-  if(D1_Day2.substring(weekday()-1,weekday())=="1") {
-    if(currentTime>D1_Start2 && currentTime_minus<D1_Start2 && currentTime<D1_Stop2) {
-      Blynk.virtualWrite(V81, 1);
-      Serial.println("Run D1");
-      digitalWrite(D1,LOW);
-      digitalWrite(D7,LOW);
-      led99.on();    
-    } else {
-      if(currentTime>D1_Stop2 && currentTime_minus<D1_Stop2) {
-        Blynk.virtualWrite(V81, 0);      
-        digitalWrite(D1,HIGH);
-        digitalWrite(D7,HIGH);
-        led99.off();    
+      if(D1_Day2.substring(weekday()-1,weekday())=="1") {
+        if(currentTime>D1_Start2 && currentTime_minus<D1_Start2 && currentTime<D1_Stop2) {
+          Blynk.virtualWrite(V81, 1);
+          Serial.println("Run D1");
+          digitalWrite(D1,LOW);
+          digitalWrite(D7,LOW);
+          led99.on();    
+          LastTime = currentTime.substring(0,5);
+          LastDate = currentDate;
+        } else {
+          if(currentTime>D1_Stop2 && currentTime_minus<D1_Stop2) {
+            Blynk.virtualWrite(V81, 0);      
+            Serial.println("Stop D1");
+            digitalWrite(D1,HIGH);
+            digitalWrite(D7,HIGH);
+            led99.off();    
+            LastTime = currentTime.substring(0,5);
+            LastDate = currentDate;
+          }
+        }
       }
-    }
-  }
-  if(D2_Day2.substring(weekday()-1,weekday())=="1") {
-    if(currentTime>D2_Start2 && currentTime_minus<D2_Start2 && currentTime<D2_Stop2) {
-      Blynk.virtualWrite(V82, 1);
-      Serial.println("Run D2");
-      digitalWrite(D2,LOW);
-      digitalWrite(D7,LOW);
-      led99.on();    
-    } else {
-      if(currentTime>D2_Stop2 && currentTime_minus<D2_Stop2) {
-        Blynk.virtualWrite(V82, 0);      
-        digitalWrite(D2,HIGH);
-        digitalWrite(D7,HIGH);
-        led99.off();    
+      if(D2_Day2.substring(weekday()-1,weekday())=="1") {
+        if(currentTime>D2_Start2 && currentTime_minus<D2_Start2 && currentTime<D2_Stop2) {
+          Blynk.virtualWrite(V82, 1);
+          Serial.println("Run D2");
+          digitalWrite(D2,LOW);
+          digitalWrite(D7,LOW);
+          led99.on();    
+          LastTime = currentTime.substring(0,5);
+          LastDate = currentDate;
+        } else {
+          if(currentTime>D2_Stop2 && currentTime_minus<D2_Stop2) {
+            Blynk.virtualWrite(V82, 0);      
+            Serial.println("Stop D2");
+            digitalWrite(D2,HIGH);
+            digitalWrite(D7,HIGH);
+            led99.off();    
+            LastTime = currentTime.substring(0,5);
+            LastDate = currentDate;
+          }
+        }
       }
-    }
-  }
-  if(D5_Day2.substring(weekday()-1,weekday())=="1") {
-    if(currentTime>D5_Start2 && currentTime_minus<D5_Start2 && currentTime<D5_Stop2) {
-      Blynk.virtualWrite(V85, 1);
-      Serial.println("Run D5");
-      digitalWrite(D5,LOW);
-      digitalWrite(D7,LOW);
-      led99.on();    
-    } else {
-      if(currentTime>D5_Stop2 && currentTime_minus<D5_Stop2) {
-        Blynk.virtualWrite(V85, 0);      
-        digitalWrite(D5,HIGH);
-        digitalWrite(D7,HIGH);
-        led99.off();    
+      if(D5_Day2.substring(weekday()-1,weekday())=="1") {
+        if(currentTime>D5_Start2 && currentTime_minus<D5_Start2 && currentTime<D5_Stop2) {
+          Blynk.virtualWrite(V85, 1);
+          Serial.println("Run D5");
+          digitalWrite(D5,LOW);
+          digitalWrite(D7,LOW);
+          led99.on();    
+          LastTime = currentTime.substring(0,5);
+          LastDate = currentDate;
+        } else {
+          if(currentTime>D5_Stop2 && currentTime_minus<D5_Stop2) {
+            Blynk.virtualWrite(V85, 0);      
+            Serial.println("Stop D5");
+            digitalWrite(D5,HIGH);
+            digitalWrite(D7,HIGH);
+            led99.off();    
+            LastTime = currentTime.substring(0,5);
+            LastDate = currentDate;
+          }
+        }
       }
-    }
-  }
-  if(D6_Day2.substring(weekday()-1,weekday())=="1") {
-    if(currentTime>D6_Start2 && currentTime_minus<D6_Start2 && currentTime<D6_Stop2) {
-      Blynk.virtualWrite(V86, 1);
-      Serial.println("Run D6");
-      digitalWrite(D6,LOW);
-      digitalWrite(D7,LOW);
-      led99.on();    
-    } else {
-      if(currentTime>D6_Stop2 && currentTime_minus<D6_Stop2) {
-        Blynk.virtualWrite(V86, 0);      
-        digitalWrite(D6,HIGH);
-        digitalWrite(D7,HIGH);
-        led99.off();    
+      if(D6_Day2.substring(weekday()-1,weekday())=="1") {
+        if(currentTime>D6_Start2 && currentTime_minus<D6_Start2 && currentTime<D6_Stop2) {
+          Blynk.virtualWrite(V86, 1);
+          Serial.println("Run D6");
+          digitalWrite(D6,LOW);
+          digitalWrite(D7,LOW);
+          led99.on();    
+          LastTime = currentTime.substring(0,5);
+          LastDate = currentDate;
+        } else {
+          if(currentTime>D6_Stop2 && currentTime_minus<D6_Stop2) {
+            Blynk.virtualWrite(V86, 0);      
+            Serial.println("Stop D6");
+            digitalWrite(D6,HIGH);
+            digitalWrite(D7,HIGH);
+            led99.off();    
+            LastTime = currentTime.substring(0,5);
+            LastDate = currentDate;
+          }
+        }
       }
     }
   }  
@@ -455,7 +503,7 @@ BLYNK_WRITE(V21)
       D1_Day2+="0";
     }
   }  
-  Serial.println(String("D1 Day2 ") + D1_Day2);
+  Serial.println(String("D3 Day2 ") + D1_Day2);
   write_String(800,D1_Day2);
 }
 
@@ -656,7 +704,6 @@ void CheckConnection(){
       Blynk.connect(3333);  // timeout set to 10 seconds and then continue without Blynk  
     }
     else{
-      count = 0;
       myTimerEvent();     
     }  
   }
@@ -750,11 +797,11 @@ void setup()
   pinMode(D5,OUTPUT);
   pinMode(D6,OUTPUT);
   pinMode(D7,OUTPUT);
-  digitalWrite(D1,HIGH);
-  digitalWrite(D2,HIGH);
-  digitalWrite(D5,HIGH);
-  digitalWrite(D6,HIGH);
-  digitalWrite(D7,HIGH);
+  digitalWrite(D1,LOW);
+  digitalWrite(D2,LOW);
+  digitalWrite(D5,LOW);
+  digitalWrite(D6,LOW);
+  digitalWrite(D7,LOW);
   WiFiConnect();
   Blynk.config(auth);  // in place of Blynk.begin(auth, ssid, pass);
   Blynk.connect(3333);  // timeout set to 10 seconds and then continue without Blynk
